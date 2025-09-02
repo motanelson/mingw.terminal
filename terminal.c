@@ -32,7 +32,7 @@ void ExecuteCommand( const char* cmd) {
     
    
     strcpy(cmds,cmd);
-    strcat(cmds," >log.txt");
+    strcat(cmds," |.\\log.exe");
     system(cmds);
     if ( (pipes =fopen("log.txt", "r"))==NULL) {
             textLen=strlen(textBuffer);
