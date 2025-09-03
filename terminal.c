@@ -164,7 +164,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         int y = 10;
         char *line = strtok(textBuffer2, "\r");
         while (line!=NULL) {
-            TextOutA(hdc, 10, y, line, strlen(line));
+            TextOutA(hdc, 10, 10 - scrollPos * 20+y , line, strlen(line));
             
             y += 20; // próxima linha (altura da fonte)
             line = strtok(NULL, "\r");
