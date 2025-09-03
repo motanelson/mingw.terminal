@@ -4,7 +4,7 @@
 ///usr/bin/i686-w64-mingw32-gcc terminal.c -o terminal.exe -mwindows
 #include <windows.h>
 #include <string.h>
-
+#include <stdio.h>
 #define ID_SCROLL 1
 char bbuffer[4096]="\0";
 
@@ -15,7 +15,7 @@ int textLen = 0;
 int scrollPos = 0;
 int MAX_TEXT=4096*16;
 char ccc=0;
-void ExecuteCommand( const char* cmd) {
+void ExecuteCommand(char* cmd) {
     char buffer[1024];
     char cmds[4096]; 
     FILE* pipes;
@@ -32,11 +32,11 @@ void ExecuteCommand( const char* cmd) {
     
    
     strcpy(cmds,bbuffer);
-    strcat(cmds," | .\\log.exe");
-    f2=fopen("log2.txt","w");
-    fputs(cmds,f2);
-    fclose(f2);
+    //strcat(cmds," | .\\log.exe\n");
+    freopen("log.txt", "w", stdout);
+        
     system(cmds);
+    fclose (stdout);
     if ( (pipes =fopen("log.txt", "r"))==NULL) {
             textLen=strlen(textBuffer);
             if (textLen > MAX_TEXT + 100) {
@@ -199,6 +199,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     RegisterClassA(&wc);
     textBuffer=(char *)malloc(MAX_TEXT);
     strcpy(textBuffer,":> ");
+    
     textBuffer2=(char *)malloc(MAX_TEXT);
     HWND hwnd = CreateWindowA("YellowWindow", "Janela Amarela",
                               WS_OVERLAPPEDWINDOW,
