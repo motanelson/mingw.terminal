@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <unistd.h>
 ///usr/bin/i686-w64-mingw32-gcc terminal.c -o terminal.exe -mwindows
 #include <windows.h>
 #include <string.h>
@@ -19,7 +19,7 @@ void ExecuteCommand( const char* cmd) {
     char buffer[1024];
     char cmds[4096]; 
     FILE* pipes;
-    
+    FILE* f2;
      
     textLen=strlen(textBuffer);
     if (textLen > MAX_TEXT + 10) {
@@ -31,8 +31,11 @@ void ExecuteCommand( const char* cmd) {
     // abrir processo cmd
     
    
-    strcpy(cmds,cmd);
-    strcat(cmds," |.\\log.exe");
+    strcpy(cmds,bbuffer);
+    strcat(cmds," | .\\log.exe");
+    f2=fopen("log2.txt","w");
+    fputs(cmds,f2);
+    fclose(f2);
     system(cmds);
     if ( (pipes =fopen("log.txt", "r"))==NULL) {
             textLen=strlen(textBuffer);
@@ -84,7 +87,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         // Criar scroll bar vertical
         CreateWindowExA(0, "SCROLLBAR", NULL,
             WS_CHILD | WS_VISIBLE | SBS_VERT,
-            780, 0, 20, 600, hwnd, (HMENU)ID_SCROLL,
+            750, 0, 20, 600, hwnd, (HMENU)ID_SCROLL,
             GetModuleHandle(NULL), NULL);
 
         SCROLLINFO si = { sizeof(si) };
